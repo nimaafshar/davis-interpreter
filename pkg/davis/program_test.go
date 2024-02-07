@@ -17,8 +17,7 @@ func TestProgram(t *testing.T) {
 			DecodeInstruction(46),
 		}
 		inputs := []int{2, 1}
-		program, err := NewProgram(instructions, inputs)
-		g.Expect(err).ToNot(HaveOccurred())
+		program := NewProgram(instructions, inputs)
 
 		lines := []string{
 			"1 2 1 0 0 0 0",
@@ -49,8 +48,7 @@ func TestProgram(t *testing.T) {
 			DecodeInstruction(6),
 		}
 		inputs := []int{1}
-		program, err := NewProgram(instructions, inputs)
-		g.Expect(err).ToNot(HaveOccurred())
+		program := NewProgram(instructions, inputs)
 
 		lines := []string{
 			"1 0",

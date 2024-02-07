@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func NewProgram(instructions []Instruction, inputs []int) (Program, error) {
+func NewProgram(instructions []Instruction, inputs []int) Program {
 	labels := make(map[Label]int)
 
 	maxLocalVarIndex := -1
@@ -24,14 +24,9 @@ func NewProgram(instructions []Instruction, inputs []int) (Program, error) {
 			continue
 		}
 
-		previousIndex, ok := labels[instruction.Label]
-		if ok {
-			// if you want to support a single label on multiple lines, comment out this section
-			return Program{}, fmt.Errorf("label %s is referrenced twice at instructions %d and %d",
-				instruction.Label.String(), previousIndex, index)
+		if _, ok := labels[instruction.Label]; !ok {
+			labels[instruction.Label] = index
 		}
-		labels[instruction.Label] = index
-
 	}
 
 	usedInputVars := make([]int, max(len(inputs), maxInputVarIndex+1))
@@ -47,7 +42,7 @@ func NewProgram(instructions []Instruction, inputs []int) (Program, error) {
 		localVariables:          make([]int, maxLocalVarIndex+1),
 		inputs:                  usedInputVars,
 		maxUsedInputVarsIndex:   maxInputVarIndex,
-	}, nil
+	}
 }
 
 type Program struct {

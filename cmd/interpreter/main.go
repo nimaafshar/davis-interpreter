@@ -44,7 +44,7 @@ func main() {
 		}
 	}
 
-	program, err := davis.NewProgram(instructions, inputs)
+	program := davis.NewProgram(instructions, inputs)
 	if err != nil {
 		fmt.Println(fmt.Errorf("invalid program: %w", err))
 		os.Exit(1)
